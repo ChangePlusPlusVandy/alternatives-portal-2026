@@ -54,10 +54,12 @@ src/
   components/
     ui/                 # shadcn/ui components. Don't hand-edit; re-add via the shadcn CLI
     <feature>/          # components used by one tool only
+    <shared>.tsx        # components used by more than one tool, e.g. signature-pad.tsx
   lib/
     supabase/           # Supabase clients (server + browser). The only place clients are created
     par/                # PAR business logic (period math, hour splitting). Pure functions + tests
     procurement/        # procurement business logic
+    pdf/                # PDF utilities shared by PAR export and procurement
     validation/         # zod schemas shared by forms and server actions
 supabase/
   migrations/           # SQL migrations, append-only
@@ -66,7 +68,7 @@ docs/
   samples/              # anonymized real forms
 ```
 
-Only `src/app`, `src/components/ui`, and `src/lib` exist so far. Create the rest when you need it.
+Create folders when you first need them. A stub file whose only line is a Linear key (`// ALT-12: ...`) marks where that issue's code goes. Replace the stub.
 
 ## Architecture
 
@@ -127,6 +129,7 @@ The grid is stored per day per grant so a signed PAR can be reproduced exactly. 
 ### Tests
 
 - Any logic touching hours, dates, PAR periods, allocations, or money **must** have Vitest tests, including the edge cases listed in `docs/SPEC.md`.
+- Tests sit next to the code they test: `periods.ts` and `periods.test.ts` in the same folder.
 - Don't delete or weaken a failing test to make it pass. Fix the code or ask.
 
 ### When unsure
