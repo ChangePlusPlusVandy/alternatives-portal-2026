@@ -36,7 +36,7 @@ npm run dev           # local dev server at http://localhost:3000
 npm run lint          # ESLint
 npm run format        # Prettier (write)
 npm run format:check  # Prettier (check only, used in CI)
-npm run typecheck     # tsc --noEmit
+npm run typecheck     # next typegen, then tsc --noEmit
 npm test              # Vitest
 npm run build         # production build
 ```
