@@ -1,3 +1,7 @@
+# AGENTS.md
+
+Everything an agent needs to know about this project is in [`CLAUDE.md`](CLAUDE.md). Read it first.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know
