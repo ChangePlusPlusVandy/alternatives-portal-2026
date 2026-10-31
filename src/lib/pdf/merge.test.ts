@@ -101,6 +101,16 @@ describe("mergePdfs", () => {
     expect(err.message).toContain("broken.pdf");
   });
 
+  it("throws an error naming the file when an image is corrupt", async () => {
+    // PNG signature followed by junk
+    const badPng = Uint8Array.from([0x89, 0x50, 0x4e, 0x47, 1, 2, 3, 4]);
+    const err = await mergePdfs([
+      { name: "broken-screenshot.png", data: badPng },
+    ]).catch((e) => e);
+    expect(err).toBeInstanceOf(MergePdfError);
+    expect(err.fileName).toBe("broken-screenshot.png");
+  });
+
   it("rejects unsupported file types, naming the file", async () => {
     const txt = new TextEncoder().encode("hello");
     await expect(mergePdfs([{ name: "notes.txt", data: txt }])).rejects.toThrow(

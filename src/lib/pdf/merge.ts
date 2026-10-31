@@ -50,16 +50,13 @@ function detectKind(b: Uint8Array): FileKind {
   return "unknown";
 }
 
-// Real encrypted PDFs always carry an /Encrypt entry in their trailer, so we
-// also look for it in the raw bytes in case pdf-lib reports the problem
-// as a generic parse error instead of EncryptedPDFError.
+// A PDF's trailer (which holds /Encrypt for encrypted files) is at the very end,
+// so only look there. This is a fallback for when pdf-lib reports an encrypted
+// file as a generic parse error. Scanning the whole file could mislabel damaged
+// files that happen to contain "/Encrypt" elsewhere.
 function looksEncrypted(bytes: Uint8Array): boolean {
-  let text = "";
-  const chunk = 0x8000;
-  for (let i = 0; i < bytes.length; i += chunk) {
-    text += String.fromCharCode(...bytes.subarray(i, i + chunk));
-  }
-  return /\/Encrypt\b/.test(text);
+  const tail = bytes.subarray(Math.max(0, bytes.length - 2048));
+  return /\/Encrypt\b/.test(String.fromCharCode(...tail));
 }
 
 async function appendPdf(
