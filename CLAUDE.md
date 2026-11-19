@@ -65,7 +65,7 @@ supabase/
   migrations/           # SQL migrations, append-only
 docs/
   SPEC.md               # goals, business rules, glossary, open questions
-  samples/              # anonymized real forms
+  samples/              # anonymized real forms, one folder per tool. See samples/README.md
 ```
 
 Create folders when you first need them. A stub file whose only line is a Linear key (`// ALT-12: ...`) marks where that issue's code goes. Replace the stub.
