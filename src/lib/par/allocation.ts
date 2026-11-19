@@ -6,6 +6,7 @@
  */
 
 import { getParPeriodDates, type CalendarDate } from "./periods";
+import { MAX_HOURS_PER_WORKING_DAY } from "./validate-hours";
 
 export const PTO_GRANT_ID = "PTO";
 
@@ -43,7 +44,7 @@ export interface ParAllocation {
   rows: ParAllocationRow[];
 }
 
-const DAILY_CAP_TENTHS = 80;
+const DAILY_CAP_TENTHS = MAX_HOURS_PER_WORKING_DAY * 10;
 const MAX_ATTEMPTS = 1000;
 
 export function generateParAllocation(
